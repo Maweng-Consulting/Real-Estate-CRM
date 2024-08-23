@@ -1,0 +1,143 @@
+<div class="modal fade" id="newPropertyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">New Property</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <form action="{% url 'new-property' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                  <div class="row mb-3">
+                <div class="col">
+                  <label for="exampleInputPassword1" class="form-label fw-bold">Property Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    required
+                  />
+                </div>
+                
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Location</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="location"
+                      name="location"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Total Units</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="total_units"
+                      name="total_units"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Total Cost</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="total_cost"
+                      name="total_cost"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Booking Fee</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="booking_fee"
+                      name="booking_fee"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Deposit Fee</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="deposit_fee"
+                      name="deposit_fee"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label class="form-label fw-bold">Property Type</label>
+                    <select class="form-select" id="property_type" name="property_type">
+                        <option value="Land">Land</option>
+                        <option value="Building">Building</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="exampleInputPassword1" class="form-label fw-bold">Town</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="town"
+                          name="town"
+                          required
+                        />
+                    </div>
+  
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">County</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="county"
+                        name="county"
+                        required
+                      />
+                    </div>
+                  </div>
+             
+                <div class="row mb-3">
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">Title Deed</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="title_deed"
+                        name="title_deed"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">Image</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="image"
+                        name="image"
+                        required
+                      />
+                    </div>
+                  </div>
+                
+                <div class="text-center mt-2">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+              </form>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,155 @@
+<div class="modal fade" id="editPropertyModal{{property.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">Edit Property</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <form action="{% url 'edit-property' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="number" name="property_id" id="property_id" value="{{property.id}}" hidden />
+                  <div class="row mb-3">
+                <div class="col">
+                  <label for="exampleInputPassword1" class="form-label fw-bold">Property Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    value="{{property.name}}"
+                    required
+                  />
+                </div>
+                
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Location</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="location"
+                      name="location"
+                      value="{{property.location}}"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Total Units</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="total_units"
+                      name="total_units"
+                      value="{{property.total_units}}"
+                      required
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Total Cost</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="total_cost"
+                      name="total_cost"
+                      value="{{property.total_cost}}"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Booking Fee</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="booking_fee"
+                      name="booking_fee"
+                      value="{{property.booking_fee}}"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Deposit Fee</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="deposit_fee"
+                      name="deposit_fee"
+                      value="{{property.deposit_fee}}"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label class="form-label fw-bold">Property Type</label>
+                    <select class="form-select" id="property_type" name="property_type"  value="{{property.property_type}}">
+                        <option value="{{property.property_type}}">{{property.property_type}}</option>
+                        {% for property_type in property_types %}
+                            {% if property_type != property.property_type %}
+                                <option value="{{property_type}}">{{property_type}}</option>
+                            {% endif %}
+                        {% endfor %}
+                      </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="exampleInputPassword1" class="form-label fw-bold">Town</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="town"
+                          name="town"
+                          value="{{property.town}}"
+                          required
+                        />
+                    </div>
+  
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">County</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="county"
+                        name="county"
+                        value="{{property.county}}"
+                        required
+                      />
+                    </div>
+                  </div>
+             
+                <div class="row mb-3">
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">Title Deed</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="title_deed"
+                        name="title_deed"
+                      />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">Image</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="image"
+                        name="image"
+                      />
+                    </div>
+                  </div>
+                
+                <div class="text-center mt-2">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+              </form>
+      </div>
+    </div>
+  </div>

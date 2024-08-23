@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4 mb-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Payment Plans</h5>
+          <hr/>
+          <p class="card-text">Count: {{payment_plans_count}}</p>
+          <a href="{% url 'payment-plans' %}" class="btn btn-info">See List</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="card">
+       
+        <div class="card-body">
+          <h5 class="card-title">Payments</h5>
+          <hr/>
+          <p class="card-text">Count: {{payments_count}}</p>
+          <a href="#" class="btn btn-info">See List</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="card">
+       
+        <div class="card-body">
+          <h5 class="card-title">Client Installments</h5>
+          <hr/>
+          <p class="card-text">Count: {{installments_count}}</p>
+          <a href="{% url 'installments' %}" class="btn btn-info">See List</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+{% endblock %}

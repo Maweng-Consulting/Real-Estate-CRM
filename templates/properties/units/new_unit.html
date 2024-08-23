@@ -1,0 +1,58 @@
+<div class="modal fade" id="newUnitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">New Unit</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <form action="{% url 'new-unit' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                <p><b>Property Name: </b>{{property.name}}</p>
+                <hr>
+                <div class="row mb-3">
+                <div class="col">
+                  <label for="exampleInputPassword1" class="form-label fw-bold">Unit Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="unit_number"
+                    name="unit_number"
+                    required
+                  />
+                </div>
+                
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Cost</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="cost"
+                      name="cost"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Unit Status</label>
+                    <select class="form-select" id="unit_status" name="unit_status">
+                        <option value="Booked">Booked</option>
+                        <option value="Reserved">Reserved</option>
+                        <option value="Sold">Sold</option>
+                        <option value="Available">Available</option>
+                    </select>
+                  </div>
+                </div>
+             
+            
+                <div class="text-center mt-2">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+              </form>
+      </div>
+    </div>
+  </div>

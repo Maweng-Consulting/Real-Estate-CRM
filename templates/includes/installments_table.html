@@ -1,0 +1,38 @@
+<table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Client</th>
+        <th scope="col">Expected</th>
+        <th scope="col">Paid</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Status</th>
+        <th scope="col" colspan="3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for installment in page_obj %}
+      <tr>
+        <td>{{installment.id}}</td>
+        <td>{{installment.client}} (<b>{{installment.payment_plan.unit.property}} - {{installment.payment_plan.unit}}</b>)</td>
+        <td>{{installment.amount_expected}}</td>
+        <td>{{installment.amount_paid}}</td>
+        <td>{{installment.date_expected}}</td>
+        <td>{{installment.status}}</td>
+        <td><a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#installmentDetailsModal{{ installment.id }}">
+          <i class="bi bi-eye"></i>
+        </a></td>
+        <td><a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#markInstallmentModal{{ installment.id }}">
+          <i class="bi bi-pencil-square"></i>
+        </a></td>
+        <td><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteInstallmentModal{{ installment.id }}">
+          <i class="bi bi-trash"></i>
+        </a></td>
+        {% include "finance/installments/mark_installment.html" %}
+        {% include "finance/installments/delete_installment.html" %}
+        {% include "finance/installments/installment_details.html" %}
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>

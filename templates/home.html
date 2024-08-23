@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+      <div class="card m-2" style="width: 16rem; height: 180px;">
+       
+        <div class="card-body">
+          <h5 class="card-title">Employees</h5>
+          <hr/>
+          <p class="card-text">Staff Count: {{staff_count}}</p>
+          <a href="{% url 'employees' %}" class="btn btn-info">See List</a>
+        </div>
+      </div>
+
+      <div class="card m-2" style="width: 16rem; height: 180px;">
+       
+        <div class="card-body">
+          <h5 class="card-title">Clients</h5>
+          <hr/>
+          <p class="card-text">Count: {{clients_count}}</p>
+          <a href="{% url 'clients' %}" class="btn btn-info">See List</a>
+        </div>
+      </div>
+      
+      <div class="card m-2" style="width: 16rem; height: 180px;">
+        <div class="card-body">
+          <h5 class="card-title">Properties</h5>
+          <hr/>
+          <p class="card-text">Count: {{properties_count}}</p>
+          <a href="{% url 'properties' %}" class="btn btn-info">See List</a>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="card m-2" style="width: 16rem; height: 180px;">
+        <div class="card-body">
+          <h5 class="card-title">Sales This Week</h5>
+          <hr/>
+          <p class="card-text">Amount: {{week_orders}}</p>
+          <a href="#" class="btn btn-info">See Report</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 16rem; height: 180px;">
+        <div class="card-body">
+          <h5 class="card-title">Sales This Month</h5>
+          <hr/>
+          <p class="card-text">Amount: {{month_orders}}</p>
+         
+          <a href="#" class="btn btn-info">See Report</a>
+        </div>
+      </div>
+      <div class="card m-2" style="width: 16rem; height: 180px;">
+        <div class="card-body">
+          <h5 class="card-title">Sales Today</h5>
+          <hr/>
+          <p class="card-text">Amount: {{orders_today}}</p>
+          <a href="#" class="btn btn-info">See Report</a>
+        </div>
+      </div>
+  
+</div>
+{% endblock %}

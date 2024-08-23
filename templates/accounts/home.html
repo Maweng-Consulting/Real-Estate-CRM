@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4 mb-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Employees</h5>
+          <hr/>
+          <p class="card-text">Count: {{staff_count}}</p>
+          <a href="{% url 'employees' %}" class="btn btn-info">See List</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="card">
+       
+        <div class="card-body">
+          <h5 class="card-title">Clients</h5>
+          <hr/>
+          <p class="card-text">Count: {{clients_count}}</p>
+          <a href="{% url 'clients' %}" class="btn btn-info">See List</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-2">
+      <div class="card">
+       
+        <div class="card-body">
+          <h5 class="card-title">Visitors</h5>
+          <hr/>
+          <p class="card-text">Count: {{vistors_count}}</p>
+          <a href="#" class="btn btn-info">See List</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+{% endblock %}

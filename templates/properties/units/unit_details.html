@@ -1,0 +1,31 @@
+<div class="modal fade" id="unitDetailsModal{{unit.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">Unit Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <div class="modal-body">
+            <div class="row">
+                <div class="col">
+                    <p><b>Property: </b>{{unit.property}}</p>
+                    <p><b>Unit Number: </b>{{unit.unit_number}}</p>
+                    <p><b>Cost: </b>{{unit.cost}}</p>
+                </div>
+                <div class="col">
+                    <p><b>Booking Fee: </b>{{unit.booking_fee}}</p>
+                    <p><b>Deposit Fee: </b>{{unit.deposit_fee}}</p>
+                    <p><b>Unit Status: </b>{{unit.unit_status}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row text-center">
+                {% if unit.client %}
+                <p><b>Assigned To: </b>{{unit.client}}</p>
+                {% endif %}
+            </div>
+            </div>
+              
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-4">
+        <h3>Properties</h3>
+    </div>
+    <div class="col-4">
+        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPropertyModal">New Property</a>
+    </div>
+    <div class="col-4">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <div class="row">
+            <div class="col-8">
+              <input type="text" class="form-control" name="search_text" id="search_text" placeholder="Name..." >
+            </div>
+            <div class="col-4">
+              <button class="btn btn-success">Search</button>
+            </div>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+</div>
+<hr/>
+      <div class="table-responsive small">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Type</th>
+              <th scope="col">Units</th>
+              <th scope="col">Total Cost</th>
+              <th scope="col">Sold out</th>
+              <th scope="col">Units</th>
+              <th scope="col" colspan="3">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for property in page_obj %}
+            <tr>
+              <td>{{property.id}}</td>
+              <td>{{property.name}}</td>
+              <td>{{property.property_type}}</td>
+              <td>{{property.total_units}}</td>
+              <td>{{property.total_cost}}</td>
+              <td>{% if property.sold_out %} Yes {% else %} No {% endif %}</td>
+              <td><a href="{% url 'units' property.id %}" class="btn btn-primary btn-sm">Units</a></td>
+              <td><a href="{% url 'property-details' property.id %}" class="btn btn-info btn-sm">
+                <i class="bi bi-eye"></i>
+              </a></td>
+              <td><a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPropertyModal{{ property.id }}">
+                <i class="bi bi-pencil-square"></i>
+              </a></td>
+              <td><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletePropertyModal{{ property.id }}">
+                <i class="bi bi-trash"></i>
+              </a></td>
+            </tr>
+            {% include "properties/edit_property.html" %}
+            {% include "properties/delete_property.html" %}
+            {% endfor %}
+
+          </tbody>
+        </table>
+        <div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+              {% if page_obj.has_previous %}   
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+              {% endif %}
+              <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+              {% if page_obj.has_next %}    
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+              {% endif %}   
+            </ul>
+          </nav>
+        </div>
+      </div>
+{% endblock content %}

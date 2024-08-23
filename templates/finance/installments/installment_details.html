@@ -1,0 +1,30 @@
+<div class="modal fade" id="installmentDetailsModal{{installment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">Installment Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <div class="modal-body">
+            <div class="row">
+                <div class="col">
+                    <p><b>Payment Plan: </b>{{installment.payment_plan}}</p>
+                    <p><b>Amount Expected: </b>{{installment.amount_expected}}</p>
+                    <p><b>Amount Paid: </b>{{installment.amount_paid}}</p>
+                </div>
+                <div class="col">
+                    <p><b>Date Expected: </b>{{installment.date_expected}}</p>
+                    <p><b>Is Paid: </b>{% if installment.paid %} Yes {% else %} No {% endif %}</p>
+                    <p><b>Status: </b>{{installment.status}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row text-center">
+                <p><b>Belongs To: </b>{{installment.client}}</p>
+                
+            </div>
+            </div>
+              
+      </div>
+    </div>
+  </div>

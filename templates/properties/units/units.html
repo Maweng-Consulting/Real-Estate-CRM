@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+    <h3>Units</h3>
+  </div>
+  <div class="col">
+    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#newUnitModal">New Unit</button>
+  </div>
+  <div class="col">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <div class="row">
+          <div class="col-8">
+            <input type="text" class="form-control" name="search_text" id="search_text" placeholder="Number..." >
+          </div>
+          <div class="col-4">
+            <button class="btn btn-success">Search</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="table-responsive small">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Property</th>
+          <th scope="col">Number</th>
+          <th scope="col">Client</th>
+          <th scope="col">Cost</th>
+          <th scope="col">Status</th>
+          <th scope="col" colspan="3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for unit in page_obj %}
+        <tr>
+          <td>{{unit.id}}</td>
+          <td>{{unit.property}}</td>
+          <td>{{unit.unit_number}}</td>
+          <td>{% if unit.client %} {{unit.client}} {% else %} <a data-bs-toggle="modal" data-bs-target="#assignUnitModal{{ unit.id }}" class="btn btn-primary btn-sm"><i class="bi bi-person-plus"></i></a> {% endif %}</td>
+          <td>{{unit.cost}}</td>
+          <td>{{unit.unit_status}}</td>
+          
+          <td><a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#unitDetailsModal{{unit.id}}">
+            <i class="bi bi-eye"></i>
+          </a></td>
+          <td><a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editUnitModal{{ unit.id }}">
+            <i class="bi bi-pencil-square"></i>
+          </a></td>
+          <td><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUnitModal{{ unit.id }}">
+            <i class="bi bi-trash"></i>
+          </a></td>
+          {% include "properties/units/edit_unit.html" %}
+          {% include "properties/units/delete_unit.html" %}
+          {% include "properties/units/assign_unit.html" %}
+          {% include "properties/units/unit_details.html" %}
+        </tr>
+       
+        {% endfor %}
+
+      </tbody>
+    </table>
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+          {% if page_obj.has_previous %}   
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+          {% if page_obj.has_next %}    
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+          {% endif %}   
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+{% endblock content %}

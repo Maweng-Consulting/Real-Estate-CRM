@@ -1,0 +1,151 @@
+<div class="modal fade" id="newPlanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">New Payment Plan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <form action="{% url 'new-payment-plan' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">Client</label>
+                      <select class="form-select" id="client" name="client" onchange="filterOptions()">
+                        {% for client in clients %}
+                          <option value="{{client.id}}">{{client.name}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    
+                    </div>
+                
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Unit</label>
+                    <select class="form-select" id="unit" name="unit">
+                      <option value="">Select Unit</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Booking Fee</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="booking_fee"
+                      name="booking_fee"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Deposit Fee</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="deposit_fee"
+                      name="deposit_fee"
+                      required
+                    />
+                  </div>
+                </div>
+               
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="exampleInputPassword1" class="form-label fw-bold">Period</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="period"
+                          name="period"
+                          required
+                        />
+                    </div>
+  
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">Installment Amount</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="installment_amount"
+                        name="installment_amount"
+                        required
+                      />
+                    </div>
+                  </div>
+             
+                <div class="row mb-3">
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">Total Amount</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="total_amount"
+                        name="total_amount"
+                        required
+                      />
+                    </div>
+                    <div class="col">
+                      <label for="exampleInputPassword1" class="form-label fw-bold">First Installment Date</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="first_installment_date"
+                        name="first_installment_date"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                <div class="text-center mt-2">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+              </form>
+      </div>
+    </div>
+  </div>
+
+<script>
+  function filterOptions() {
+    // Get the selected category
+    const clientId = document.getElementById('client').value;
+    // Get the second select input
+    const unitSelect = document.getElementById('unit');
+
+    unitSelect.innerHTML = '<option value="">Select Unit</option>';
+
+    var unitsList = [
+            {% for unit in units %}
+                {
+                    'id': '{{ unit.id }}',
+                    'unit_number': '{{ unit.unit_number }}',
+                    'client': '{{ unit.client }}',
+                    'client_id': '{{ unit.client_id }}',
+                    'property': '{{ unit.property }}',
+              
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+      ];
+
+    // Clear previous options
+    //itemsSelect.innerHTML = '<option value="">Select Item</option>';
+
+    // If a valid category is selected, add the corresponding options
+    
+    const filteredUnits = unitsList.filter(unit => unit.client_id === clientId);
+
+    // Populate the second select with the filtered units
+    filteredUnits.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit.id;
+        option.text = `${unit.property} <=> ${unit.unit_number}`;
+        unitSelect.appendChild(option);
+    });
+
+    console.log(filteredUnits)
+    console.log(`Selected Client ID: ${clientId}`)
+}
+
+</script>

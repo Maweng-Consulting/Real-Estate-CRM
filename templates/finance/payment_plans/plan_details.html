@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="card mb-4">
+    <div class="card-header">
+        <h4>{{plan.client}} ({{plan.unit.property}} -{{plan.unit}})</h4>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card-body">
+          <p><strong>Booking Fee:</strong> {{plan.booking_fee}}</p>
+          <p><strong>Deposit Fee:</strong> {{plan.deposit_fee}}</p>
+          <p><strong>Period:</strong> {{plan.period}} Months</p>
+          <p><strong>Total Amount:</strong> {{plan.total_amount}}</p>
+      </div>
+      </div>
+      <div class="col">
+        <div class="card-body">
+          <p><strong>Installment:</strong> {{plan.installment_amount}}</p>
+          <p><strong>1st Installment Date:</strong> {{plan.first_repayment_date}}</p>
+          <p><strong>Amount Paid:</strong> {{plan.amount_paid}}</p>
+          <p><strong>Balance:</strong> {{plan.balanc}}</p>
+      </div>
+      </div>
+    </div>    
+</div>
+<hr/>
+<div class="row">
+  <div class="col">
+    <h3>Installments</h3>
+  </div>
+  <div class="col">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <div class="row">
+          <div class="col-8">
+            <input type="text" class="form-control" name="search_text" id="search_text" placeholder="Name..." >
+          </div>
+          <div class="col-4">
+            <button class="btn btn-success">Search</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+    <div class="table-responsive small">
+        {% include "includes/installments_table.html" %}
+        <div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+              {% if page_obj.has_previous %}   
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+              {% endif %}
+              <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+              {% if page_obj.has_next %}    
+              <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+              {% endif %}   
+            </ul>
+          </nav>
+        </div>
+      </div>
+</div>
+{% endblock content %}
