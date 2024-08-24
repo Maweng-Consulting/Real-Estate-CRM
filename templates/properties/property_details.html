@@ -1,28 +1,31 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <div class="card mb-4">
-    <div class="card-header">
-        <h4>{{property.name}}</h4>
+<div class="modal fade" id="propertyDetailsModal{{property.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-center">{{property.name}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                <div class="card-body">
+                  <p><strong>Location:</strong> {{property.location}}</p>
+                  <p><strong>Type:</strong> {{property.property_type}}</p>
+                  <p><strong>Description:</strong> {{property.description}}</p>
+                  <p><strong>Total Units:</strong> {{property.total_units}}</p>
+              </div>
+              </div>
+              <div class="col">
+                <div class="card-body">
+                  <p><strong>Total Cost:</strong> {{property.total_cost}}</p>
+                  <p><strong>Booking Fee:</strong> {{property.booking_fee}}</p>
+                  <p><strong>Deposit Fee:</strong> {{property.deposit_fee}}.</p>
+                  <p><strong>Town:</strong> {{property.town}}, {{property.county}}</p>
+              </div>
+              </div>
+            </div>   
+          <hr>
+          </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="card-body">
-          <p><strong>Location:</strong> {{property.location}}</p>
-          <p><strong>Type:</strong> {{property.property_type}}</p>
-          <p><strong>Description:</strong> {{property.description}}</p>
-          <p><strong>Total Units:</strong> {{property.total_units}}</p>
-      </div>
-      </div>
-      <div class="col">
-        <div class="card-body">
-          <p><strong>Total Cost:</strong> {{property.total_cost}}</p>
-          <p><strong>Booking Fee:</strong> {{property.booking_fee}}</p>
-          <p><strong>Deposit Fee:</strong> {{property.deposit_fee}}.</p>
-          <p><strong>Town:</strong> {{property.town}}, {{property.county}}</p>
-      </div>
-      </div>
-    </div>    
+  </div>
 </div>
-
-{% endblock content %}
