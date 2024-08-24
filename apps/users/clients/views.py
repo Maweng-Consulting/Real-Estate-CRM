@@ -23,6 +23,18 @@ def clients(request):
 
 
 @login_required(login_url="/users/login/")
+def client_details(request, id):
+    client = Client.objects.get(id=id)
+    plans = client.clientpaymentplans.all().order_by("-created")
+
+    context = {
+        "client": client,
+        "plans": plans
+    }
+    return render(request, "clients/client_details.html", context)
+
+
+@login_required(login_url="/users/login/")
 def new_client(request):
     if request.method == "POST":
         email = request.POST.get("email")

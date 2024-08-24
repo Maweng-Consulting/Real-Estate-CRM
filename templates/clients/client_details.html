@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="card mb-4">
+    <div class="card-header">
+        <h4>{{client.name}}</h4>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card-body">
+          <p><strong>Phone Number:</strong> {{client.phone_number}}</p>
+          <p><strong>Email:</strong> {{client.email}}</p>
+          <p><strong>ID Number:</strong> {{client.id_number}}</p>
+          <p><strong>KRA Pin:</strong> {{client.kra_pin}}</p>
+          <p><strong>Gender:</strong> {{client.gender}}</p>
+          <p><strong>Address:</strong> {{client.address}}, {{client.city}}-{{client.country}}</p>
+      </div>
+      </div>
+      <div class="col">
+        <div class="card-body">
+          <p><a href="{{client.id_copy.url}}" target="_blank" class="btn btn-info">Scanned ID Card:</a></p>
+          <p><a href="{{client.kra_certificate.url}}" target="_blank" class="btn btn-info">KRA Certificate</a></p>
+          <p><a href="{{client.photo.url}}" target="_blank" class="btn btn-info">Client Image/Photo</a></p>
+          <p><strong>Last Updated:</strong> {{client.modified}}</p>
+      </div>
+      </div>
+    </div>    
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <h5>Payment Plans</h5>
+            </div>
+            <div class="col">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                      <div class="row">
+                        <div class="col-8">
+                          <input type="text" class="form-control" name="id_number" id="id_number" placeholder="ID Number" >
+                        </div>
+                        <div class="col-4">
+                          <button class="btn btn-success">Search</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    
+                  </form>
+            </div>
+        </div>
+    </div>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Total Amount</th>
+              <th scope="col">Period</th>
+              <th scope="col">Full Paid</th>
+              <th scope="col">Offer Letter</th>
+              <th scope="col" colspan="3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in plans %}
+            <tr>
+              <td>{{plan.id}}</td>
+              <td>{{plan.unit.property}}(<b>{{plan.unit}}</b>)</td>
+              <td>{{plan.total_amount}}</td>
+              <td>{{plan.period}}</td>
+              <td>{% if plan.fully_paid %} Yes {% else %} No {% endif %}</td>
+              <td><a href="#" class="btn btn-success btn-sm"><i class="bi bi-envelope"></i></a></td>
+              <td><a href="{% url 'payment-plan-details' plan.id %}" class="btn btn-info btn-sm">
+                <i class="bi bi-eye"></i>
+              </a></td>
+              <td><a class="btn btn-warning btn-sm">
+                <i class="bi bi-printer"></i>
+              </a></td>
+              <td><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletePlanModal{{ plan.id }}">
+                <i class="bi bi-trash"></i>
+              </a></td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+    </table>
+</div>
+
+{% endblock content %}

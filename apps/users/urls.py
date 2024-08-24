@@ -1,7 +1,7 @@
 from django.urls import path
 from apps.users.views import user_login, user_logout, people_home
 from apps.users.staff.views import staff, new_staff, edit_staff, delete_staff
-from apps.users.clients.views import clients, new_client, edit_client, delete_client
+from apps.users.clients.views import clients, new_client, edit_client, delete_client, client_details
 
 urlpatterns = [
     path("", people_home, name="people"),
@@ -16,6 +16,7 @@ urlpatterns = [
 
     # Clients
     path("clients/", clients, name="clients"),
+    path("clients/<int:id>/details/", client_details, name="client-details"),
     path("new-client/", new_client, name="new-client"),
     path("edit-client/", edit_client, name="edit-client"),
     path("delete-client/", delete_client, name="delete-client"),

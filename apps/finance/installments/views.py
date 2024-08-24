@@ -1,14 +1,13 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.db.models import Q
 
 from apps.finance.models import ClientInstallment
 
 INSTALLMENT_STATUSES = ["Paid", "Pending", "Defaulted", "Future"]
+PAYMENT_REASONS = ["Deposit", "Booking", "Installment", "Combined"]
+PAYMENT_METHODS = ["Mpesa", "Bank Transfer", "Bank Deposit", "Cash",  "Cheque"]
 
 @login_required(login_url="/users/login")
 def installments(request):
@@ -20,7 +19,7 @@ def installments(request):
     paginator = Paginator(installments, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj": page_obj, "installment_statuses": INSTALLMENT_STATUSES}
+    context = {"page_obj": page_obj, "installment_statuses": INSTALLMENT_STATUSES, "payment_methods": PAYMENT_METHODS, "payment_reasons": PAYMENT_REASONS}
 
     return render(request, "finance/installments/installments.html", context)
 

@@ -7,7 +7,7 @@
         <th scope="col">Paid</th>
         <th scope="col">Due Date</th>
         <th scope="col">Status</th>
-        <th scope="col" colspan="3">Actions</th>
+        <th scope="col" colspan="4">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +22,18 @@
         <td><a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#installmentDetailsModal{{ installment.id }}">
           <i class="bi bi-eye"></i>
         </a></td>
+
+        <td>
+          {% if installment.paid %}
+          <a href="#" class="btn btn-danger btn-sm">
+            <i class="bi bi-arrow-clockwise"></i>
+          </a>
+          {% else %}
+            <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#payInstallmentModal{{ installment.id }}">
+              <i class="bi bi-currency-dollar"></i>
+            </a>
+          {% endif %}
+        </td>
         <td><a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#markInstallmentModal{{ installment.id }}">
           <i class="bi bi-pencil-square"></i>
         </a></td>
@@ -31,6 +43,7 @@
         {% include "finance/installments/mark_installment.html" %}
         {% include "finance/installments/delete_installment.html" %}
         {% include "finance/installments/installment_details.html" %}
+        {% include "finance/payments/pay_installment.html" %}
       </tr>
       {% endfor %}
 

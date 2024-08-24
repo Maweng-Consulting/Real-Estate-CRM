@@ -10,9 +10,25 @@ INSTALLMENT_STATUSES = (
     ("Defaulted", "Defaulted"),
     ("Future", "Future"),
 )
+
+PAYMENT_REASONS = (
+    ("Deposit", "Deposit"),
+    ("Booking", "Booking"),
+    ("Installment", "Installment"),
+    ("Combined", "Combined"),
+)
+
+PAYMENT_METHODS = (
+    ("Mpesa", "Mpesa"),
+    ("Bank Transfer", "Bank Transfer"),
+    ("Bank Deposit", "Bank Deposit"),
+    ("Cash", "Cash"),
+    ("Cheque", "Cheque"),
+)
+
 # Create your models here.
 class ClientPaymentPlan(AbstractBaseModel):
-    client = models.ForeignKey("users.Client", on_delete=models.CASCADE)
+    client = models.ForeignKey("users.Client", on_delete=models.CASCADE, related_name="clientpaymentplans")
     unit = models.ForeignKey("properties.PropertyUnit", on_delete=models.SET_NULL, null=True)
     booking_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     deposit_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
@@ -57,11 +73,21 @@ class ClientInstallment(AbstractBaseModel):
 
     def __str__(self):
         return self.client.name
+    
+    @property
+    def amount_to_pay(self):
+        return self.amount_expected - self.amount_paid
 
 
 class ClientPayment(AbstractBaseModel):
     client = models.ForeignKey("users.Client", on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=100, decimal_places=2)
+    payment_reason = models.CharField(max_length=255, choices=PAYMENT_REASONS)
+    recorded_by = models.ForeignKey("users.User", on_delete=models.SET_NULL, null=True)
+    payment_method = models.CharField(max_length=255, choices=PAYMENT_METHODS)
+    date_paid = models.DateField()
+    installment = models.ForeignKey(ClientInstallment, on_delete=models.SET_NULL, null=True, related_name="installmentpayments")
+
 
     def __str__(self):
         return self.client.name

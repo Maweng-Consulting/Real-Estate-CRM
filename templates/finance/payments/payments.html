@@ -3,10 +3,10 @@
 {% block content %}
 <div class="row">
     <div class="col-4">
-        <h3>Payment Plans</h3>
+        <h3>Client Payments</h3>
     </div>
     <div class="col-4">
-        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPlanModal">New Payment Plan</a>
+        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPaymentModal">New Payment</a>
     </div>
     <div class="col-4">
       <form method="POST">
@@ -14,13 +14,12 @@
         <div class="input-group mb-3">
           <div class="row">
             <div class="col-8">
-              <input type="text" class="form-control" name="search_text" id="search_text" placeholder="Name..." >
+              <input type="text" class="form-control" name="search_text" id="search_text" placeholder="ID Number..." >
             </div>
             <div class="col-4">
               <button class="btn btn-success">Search</button>
             </div>
           </div>
-          
         </div>
       </form>
     </div>
@@ -32,36 +31,31 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Client</th>
-              <th scope="col">Unit</th>
-              <th scope="col">Total Amount</th>
-              <th scope="col">Period</th>
-              <th scope="col">Full Paid</th>
-              <th scope="col">Offer Letter</th>
-              <th scope="col" colspan="3">Actions</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Paid Through</th>
+              <th scope="col">Reason</th>
+              <th scope="col">Recorded By</th>
+              <th scope="col">Date Paid</th>
+              <th scope="col" colspan="2">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {% for plan in page_obj %}
+            {% for payment in page_obj %}
             <tr>
-              <td>{{plan.id}}</td>
-              <td>{{plan.client}}</td>
-              <td>{{plan.unit}}</td>
-              <td>{{plan.total_amount}}</td>
-              <td>{{plan.period}}</td>
-              <td>{% if plan.fully_paid %} Yes {% else %} No {% endif %}</td>
-              <td><a href="#" class="btn btn-success btn-sm"><i class="bi bi-envelope"></i></a></td>
-              <td><a href="{% url 'payment-plan-details' plan.id %}" class="btn btn-info btn-sm">
+              <td>{{payment.id}}</td>
+              <td>{{payment.client}}</td>
+              <td>{{payment.amount}}</td>
+              <td>{{payment.payment_method}}</td>
+              <td>{{payment.payment_reason}}</td>
+              <td>{{payment.recorded_by}}</td>
+              <td>{{payment.date_paid}}</td>
+              <td><a href="#" class="btn btn-info btn-sm">
                 <i class="bi bi-eye"></i>
               </a></td>
-              <td><a class="btn btn-warning btn-sm">
+              <td><a href="#" class="btn btn-warning btn-sm">
                 <i class="bi bi-printer"></i>
               </a></td>
-              <td><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletePlanModal{{ plan.id }}">
-                <i class="bi bi-trash"></i>
-              </a></td>
             </tr>
-            {% include "properties/edit_property.html" %}
-            {% include "properties/delete_property.html" %}
             {% endfor %}
 
           </tbody>

@@ -1,0 +1,61 @@
+<div class="modal fade" id="payInstallmentModal{{installment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <h4 class="text-center mt-3">Pay Installment</h4>
+        <hr>
+            <form action="{% url 'pay-installment' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                  <input type="number" id="installment" name="installment" value="{{installment.id}}" hidden readonly required />
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Amount Paid</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="amount"
+                      name="amount"
+                      max="{{installment.amount_to_pay}}"
+                      required
+                    />
+                  </div>
+                  
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label for="exampleInputPassword1" class="form-label fw-bold">Paid Through</label>
+                    <select class="form-select" id="payment_method" name="payment_method" required>
+                        <option></option>
+                        {% for payment_method in payment_methods %}
+                            <option value="{{payment_method}}">{{payment_method}}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label class="form-label fw-bold">Reason For Payment</label>
+                    <select class="form-select" id="payment_reason" name="payment_reason" required readonly>
+                        <option value="Installment">Installment Payment</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="exampleInputPassword1" class="form-label fw-bold">Date Paid</label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="date_paid"
+                          name="date_paid"
+                          required
+                        />
+                    </div>
+                  </div>
+                
+                <div class="text-center mt-2">
+                  <button type="submit" class="btn btn-primary">Submit Payment</button>
+                </div>
+              </div>
+              </form>
+      </div>
+    </div>
+  </div>
