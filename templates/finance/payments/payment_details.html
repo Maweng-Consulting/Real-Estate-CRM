@@ -1,0 +1,29 @@
+<div class="modal fade" id="paymentDetailsModal{{payment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">Payment Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <div class="modal-body">
+            <div class="row">
+                <div class="col">
+                    <p><b>Client: </b>{{payment.client}}</p>
+                    <p><b>Amount: </b>{{payment.amount}}</p>
+                    <p><b>Payment Method: </b>{{payment.payment_method}}</p>
+                </div>
+                <div class="col">
+                    <p><b>Payment Reason: </b>{{payment.payment_reason}}</p>
+                    <p><b>Date Paid: </b>{{payment.date_paid}}</p>
+                    <p><b>Recorded By: </b>{{payment.recorded_by}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row text-center">
+                <p><b>Recorded On: </b>{{payment.created}}</p>
+            </div>
+            </div>
+              
+      </div>
+    </div>
+  </div>

@@ -10,16 +10,20 @@ from apps.users.models import Client
 from apps.properties.models import PropertyUnit
 from apps.finance.models import ClientPaymentPlan, ClientInstallment
 
+
+@login_required(login_url="/users/login")
 def payment_plans(request):
     plans = ClientPaymentPlan.objects.all().order_by("-created")
 
     clients = Client.objects.all().order_by("-created")
-    units = PropertyUnit.objects.all().only('id', 'unit_number', 'client_id')
+    units = PropertyUnit.objects.all().only("id", "unit_number", "client_id")
     print(units)
 
     if request.method == "POST":
         id_number = request.POST.get("id_number")
-        plans = ClientPaymentPlan.objects.filter(Q(client__id_number__icontains=id_number))
+        plans = ClientPaymentPlan.objects.filter(
+            Q(client__id_number__icontains=id_number)
+        )
 
     paginator = Paginator(plans, 10)
     page_number = request.GET.get("page")
@@ -29,13 +33,18 @@ def payment_plans(request):
     return render(request, "finance/payment_plans/plans.html", context)
 
 
+@login_required(login_url="/users/login")
 def payment_plan_details(request, id):
     plan = ClientPaymentPlan.objects.get(id=id)
-    installments = ClientInstallment.objects.filter(payment_plan=plan).order_by("-created")
+    installments = ClientInstallment.objects.filter(payment_plan=plan).order_by(
+        "-created"
+    )
 
     if request.method == "POST":
         id_number = request.POST.get("search_text")
-        installments = ClientInstallment.objects.filter(Q(client__id_number__icontains=id_number))
+        installments = ClientInstallment.objects.filter(
+            Q(client__id_number__icontains=id_number)
+        )
 
     paginator = Paginator(installments, 10)
     page_number = request.GET.get("page")
@@ -45,6 +54,7 @@ def payment_plan_details(request, id):
     return render(request, "finance/payment_plans/plan_details.html", context)
 
 
+@login_required(login_url="/users/login")
 def new_payment_plan(request):
     if request.method == "POST":
         client_id = request.POST.get("client")
@@ -64,12 +74,13 @@ def new_payment_plan(request):
             period=period,
             installment_amount=installment_amount,
             total_amount=total_amount,
-            first_repayment_date =first_installment_date
+            first_repayment_date=first_installment_date,
         )
         return redirect("payment-plans")
     return render(request, "finance/payment_plans/new_plan.html")
 
 
+@login_required(login_url="/users/login")
 def delete_payment_plan(request):
     if request.method == "POST":
         plan_id = request.POST.get("plan_id")

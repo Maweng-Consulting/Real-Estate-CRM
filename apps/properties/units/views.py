@@ -7,19 +7,25 @@ from django.db.models import Q
 
 from apps.users.models import Client
 from apps.properties.models import PropertyUnit, Property
-UNIT_STATUSES = ["Booked", "Reserved", "Sold",  "Available"]
+
+UNIT_STATUSES = ["Booked", "Reserved", "Sold", "Available"]
+
 
 @login_required(login_url="/users/login")
 def units(request, id):
     property = Property.objects.get(id=id)
 
     clients = Client.objects.all()
-    
+
     units = PropertyUnit.objects.filter(property=property).order_by("-created")
 
     if request.method == "POST":
         search_text = request.POST.get("search_text")
-        units = PropertyUnit.objects.filter(property=property).filter(Q(unit_number__icontains=search_text)).order_by("-created")
+        units = (
+            PropertyUnit.objects.filter(property=property)
+            .filter(Q(unit_number__icontains=search_text))
+            .order_by("-created")
+        )
 
     paginator = Paginator(units, 10)
     page_number = request.GET.get("page")
@@ -29,10 +35,9 @@ def units(request, id):
         "property": property,
         "page_obj": page_obj,
         "unit_statuses": UNIT_STATUSES,
-        "clients": clients
+        "clients": clients,
     }
     return render(request, "properties/units/units.html", context)
-
 
 
 @login_required(login_url="/users/login")
@@ -50,7 +55,7 @@ def new_unit(request):
             cost=cost,
             unit_status=unit_status,
             booking_fee=property.booking_fee,
-            deposit_fee=property.deposit_fee
+            deposit_fee=property.deposit_fee,
         )
 
         return redirect(f"/properties/{property_id}/units")

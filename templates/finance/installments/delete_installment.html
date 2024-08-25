@@ -9,7 +9,7 @@
                 {% csrf_token %}
                 <div class="modal-body">
                 <div class="mb-2">
-                    <p>Are you sure to delete installment <b>{{installment.date_expected}}?</b></p>
+                    <p>Are you sure to delete installment for <b>{{installment.client}}</b> scheduled for <b>{{installment.date_expected}}?</b></p>
                 </div>
                 <div class="mb-2">
                     <input

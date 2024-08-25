@@ -8,6 +8,7 @@ from apps.users.models import User
 
 USER_ROLES = ["Admin", "Receptionist", "Sales Agent", "Finance Admin", "HRM Admin"]
 
+
 def staff(request):
     employees = User.objects.all().order_by("-created")
 
@@ -21,6 +22,7 @@ def staff(request):
     context = {"page_obj": page_obj, "user_roles": USER_ROLES}
 
     return render(request, "staff/staff.html", context)
+
 
 @login_required(login_url="/users/login/")
 def new_staff(request):
@@ -61,7 +63,7 @@ def new_staff(request):
                 phone_number=phone_number,
                 id_number=id_number,
                 position=position,
-                kra_pin=kra_pin
+                kra_pin=kra_pin,
             )
             user.set_password("1234")
             user.save()
@@ -70,6 +72,7 @@ def new_staff(request):
             return redirect("employees")
 
     return render(request, "staff/new_staff.html")
+
 
 @login_required(login_url="/users/login/")
 def edit_staff(request):
@@ -110,6 +113,7 @@ def edit_staff(request):
         return redirect("employees")
 
     return render(request, "staff/edit_staff.html")
+
 
 @login_required(login_url="/users/login/")
 def delete_staff(request):

@@ -26,6 +26,7 @@ PAYMENT_METHODS = (
     ("Cheque", "Cheque"),
 )
 
+
 # Create your models here.
 class ClientPaymentPlan(AbstractBaseModel):
     client = models.ForeignKey("users.Client", on_delete=models.CASCADE, related_name="clientpaymentplans")
@@ -40,40 +41,49 @@ class ClientPaymentPlan(AbstractBaseModel):
 
     def __str__(self):
         return self.client.name
-    
+
     def save(self, *args, **kwargs):
         # Call the original save method
         super().save(*args, **kwargs)
 
         self.create_installments()
-        
 
     def create_installments(self):
-        payment_date = datetime.strptime(self.first_repayment_date, '%Y-%m-%d').date()
+        payment_date = datetime.strptime(self.first_repayment_date, "%Y-%m-%d").date()
         for month in range(1, int(self.period) + 1):
             installment = ClientInstallment.objects.create(
                 client=self.client,
                 payment_plan=self,
                 amount_expected=self.installment_amount,
-                date_expected=payment_date
+                date_expected=payment_date,
             )
-            
+
             payment_date = payment_date + relativedelta(months=1)
             print(f"Next Expected Date is: {payment_date}")
-    
+
+    def final_date(self):
+        final_installment = self.planinstallments.order_by("-created").first()
+        return final_installment.date_expected
+
 
 class ClientInstallment(AbstractBaseModel):
-    client = models.ForeignKey("users.Client", on_delete=models.CASCADE, related_name="clienstallments")
-    payment_plan = models.ForeignKey(ClientPaymentPlan, on_delete=models.CASCADE, related_name="planinstallments")
+    client = models.ForeignKey(
+        "users.Client", on_delete=models.CASCADE, related_name="clienstallments"
+    )
+    payment_plan = models.ForeignKey(
+        ClientPaymentPlan, on_delete=models.CASCADE, related_name="planinstallments"
+    )
     amount_expected = models.DecimalField(max_digits=100, decimal_places=2)
     amount_paid = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     date_expected = models.DateField(null=True)
     paid = models.BooleanField(default=False)
-    status = models.CharField(max_length=255, choices=INSTALLMENT_STATUSES, default="Future")
+    status = models.CharField(
+        max_length=255, choices=INSTALLMENT_STATUSES, default="Future"
+    )
 
     def __str__(self):
         return self.client.name
-    
+
     @property
     def amount_to_pay(self):
         return self.amount_expected - self.amount_paid
@@ -86,8 +96,12 @@ class ClientPayment(AbstractBaseModel):
     recorded_by = models.ForeignKey("users.User", on_delete=models.SET_NULL, null=True)
     payment_method = models.CharField(max_length=255, choices=PAYMENT_METHODS)
     date_paid = models.DateField()
-    installment = models.ForeignKey(ClientInstallment, on_delete=models.SET_NULL, null=True, related_name="installmentpayments")
-
+    installment = models.ForeignKey(
+        ClientInstallment,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="installmentpayments",
+    )
 
     def __str__(self):
         return self.client.name

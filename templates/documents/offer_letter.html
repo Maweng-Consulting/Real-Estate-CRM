@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Letter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 800px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header, .footer {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header img {
+            max-width: 200px;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        .content {
+            margin-top: 30px;
+        }
+        .offer-details {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .offer-details th, .offer-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .offer-details th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        .signature {
+            margin-top: 50px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo.png" alt="Company Logo">
+        <h1>Real Estate CRM</h1>
+        <p>123 Main Street, Nairobi, Kenya</p>
+        <p>Email: info@realestatecrm.com | Phone: +254 700 000 000</p>
+    </div>
+
+    <h2>Offer Letter</h2>
+
+    <div class="content">
+        <p><strong>Date:</strong> {{ plan.created }}</p>
+
+        <p><strong>Client Name:</strong> {{ plan.client }}</p>
+        <p><strong>Property:</strong> {{ plan.unit.property }}</p>
+        <p><strong>Unit Number:</strong> {{ plan.unit.unit_number }}</p>
+
+        <p>Dear {{ plan.client }},</p>
+
+        <p>We are pleased to extend to you an offer for the purchase of the property located at <strong>{{ plan.unit.property.location }}</strong>. Below are the details of the offer:</p>
+
+        <table class="offer-details">
+            <tr>
+                <th>Offer Price</th>
+                <td>{{ plan.total_amount }}</td>
+            </tr>
+            <tr>
+                <th>Deposit Amount</th>
+                <td>{{ plan.deposit_fee }}</td>
+            </tr>
+            <tr>
+                <th>Balance Payment</th>
+                <td>{{ plan.total_amount }}</td>
+            </tr>
+            <tr>
+                <th>Expected Closing Date</th>
+                <td>{{ plan.final_date }}</td>
+            </tr>
+        </table>
+
+        <p>We kindly ask you to review the offer and get in touch with us if you have any questions or require further details.</p>
+
+        <p>We look forward to assisting you in this process and are committed to ensuring a smooth and satisfactory transaction.</p>
+
+        <p>Thank you for choosing Real Estate CRM.</p>
+    </div>
+
+    <div class="signature">
+        <p>Sincerely,</p>
+        <p><strong>Jane Doe</strong></p>
+        <p>Real Estate CRM</p>
+    </div>
+
+    <div class="footer">
+        <p>Real Estate CRM | 123 Main Street, Nairobi, Kenya</p>
+        <p>Email: info@realestatecrm.com | Phone: +254 700 000 000</p>
+    </div>
+    <script>
+        // Wait for the content to be fully loaded before printing
+        window.onload = function() {
+            window.print();
+            // Redirect to the homepage after printing
+            window.onafterprint = function() {
+                window.location.href = '/finance/payment-plans';
+            };
+        };
+    </script>
+</body>
+</html>

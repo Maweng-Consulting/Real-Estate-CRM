@@ -36,6 +36,7 @@ class User(AbstractUser, AbstractBaseModel):
         else:
             return f"{self.first_name} {self.last_name}"
 
+
 class Client(AbstractBaseModel):
     name = models.CharField(max_length=255)
     email = models.EmailField(null=True)
@@ -52,10 +53,12 @@ class Client(AbstractBaseModel):
 
     def __str__(self):
         return self.name
-    
+
 
 class NextOfKin(AbstractBaseModel):
-    employee = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="nextofkins")
+    employee = models.ForeignKey(
+        Client, on_delete=models.CASCADE, related_name="nextofkins"
+    )
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255)
     email = models.EmailField(null=True)

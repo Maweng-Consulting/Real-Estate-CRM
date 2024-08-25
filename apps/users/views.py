@@ -7,6 +7,7 @@ from django.db.models import Q
 
 from apps.users.models import User, Client
 
+
 # Create your views here.
 def people_home(request):
     staff_count = User.objects.exclude(
@@ -16,6 +17,7 @@ def people_home(request):
 
     context = {"staff_count": staff_count, "clients_count": clients_count}
     return render(request, "accounts/home.html", context)
+
 
 def user_login(request):
     if request.method == "POST":

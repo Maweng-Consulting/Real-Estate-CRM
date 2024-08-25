@@ -1,0 +1,30 @@
+<div class="modal fade" id="visitDetailsModal{{visitor.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 text-center">Visitor: {{visitor.name}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <div class="modal-body">
+            <div class="row">
+                <div class="col">
+                    <p><b>ID Number: </b>{{visitor.id_number}}</p>
+                    <p><b>Email: </b>{{visitor.email}}</p>
+                    <p><b>Phone Number: </b>{{visitor.phone_number}}</p>
+                </div>
+                <div class="col">
+                    <p><b>Gender: </b>{{visitor.gender}}</p>
+                    <p><b>Reason: </b>{{visitor.reason}}</p>
+                    <p><b>Represents: </b>{{visitor.represents}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row text-center">
+                <p><b>Checkout Time: </b>{{visitor.checkout_time}}</p>
+                <p><b>Last Update Time: </b>{{visitor.modified}}</p>
+            </div>
+            </div>
+              
+      </div>
+    </div>
+  </div>

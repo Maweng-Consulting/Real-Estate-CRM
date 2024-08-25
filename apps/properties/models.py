@@ -1,5 +1,6 @@
 from django.db import models
 from apps.core.models import AbstractBaseModel
+
 # Create your models here.
 PROPERTY_TYPES = (
     ("Land", "Land"),
@@ -12,6 +13,7 @@ UNIT_STATUSES = (
     ("Sold", "Sold"),
     ("Available", "Available"),
 )
+
 
 class Property(AbstractBaseModel):
     name = models.CharField(max_length=255)
@@ -29,26 +31,31 @@ class Property(AbstractBaseModel):
 
     def __str__(self):
         return self.name
-    
+
+
 class PropertyPaymentPlan(AbstractBaseModel):
     name = models.CharField(max_length=255)
     payment_period = models.IntegerField(default=1)
     booking_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     deposit_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     installment = models.DecimalField(max_digits=100, decimal_places=2, default=0)
-    
+
     def __str__(self):
         return self.name
 
-    
+
 class PropertyUnit(AbstractBaseModel):
     unit_number = models.CharField(max_length=255)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="propertyunits")
+    property = models.ForeignKey(
+        Property, on_delete=models.CASCADE, related_name="propertyunits"
+    )
     client = models.ForeignKey("users.Client", on_delete=models.SET_NULL, null=True)
     cost = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     booking_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     deposit_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
-    unit_status = models.CharField(max_length=255, choices=UNIT_STATUSES, default="Available")
+    unit_status = models.CharField(
+        max_length=255, choices=UNIT_STATUSES, default="Available"
+    )
 
     def __str__(self):
         return self.unit_number

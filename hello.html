@@ -3,78 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Bootstrap Sidebar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <!-- Property Details Section -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h2>Property Name</h2>
-            </div>
-            <div class="card-body">
-                <p><strong>Location:</strong> 123 Main Street, Nairobi</p>
-                <p><strong>Type:</strong> Apartment Complex</p>
-                <p><strong>Description:</strong> A luxurious apartment complex with modern amenities and stunning views of the city skyline.</p>
-                <p><strong>Price Range:</strong> KES 50,000 - KES 150,000 per month</p>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="bg-light" style="width: 250px; height: 100vh;">
+            <div class="p-3">
+                <h4>Sidebar Menu</h4>
+                <hr>
+
+                <!-- Group 1 -->
+                <p>
+                    <a class="btn btn-link" data-bs-toggle="collapse" href="#group1" role="button" aria-expanded="false" aria-controls="group1">
+                        Group 1
+                    </a>
+                </p>
+                <div class="collapse" id="group1">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#">Link 1.1</a></li>
+                        <li class="list-group-item"><a href="#">Link 1.2</a></li>
+                        <li class="list-group-item"><a href="#">Link 1.3</a></li>
+                    </ul>
+                </div>
+
+                <!-- Group 2 -->
+                <p>
+                    <a class="btn btn-link" data-bs-toggle="collapse" href="#group2" role="button" aria-expanded="false" aria-controls="group2">
+                        Group 2
+                    </a>
+                </p>
+                <div class="collapse" id="group2">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#">Link 2.1</a></li>
+                        <li class="list-group-item"><a href="#">Link 2.2</a></li>
+                        <li class="list-group-item"><a href="#">Link 2.3</a></li>
+                    </ul>
+                </div>
+
+                <!-- Group 3 -->
+                <p>
+                    <a class="btn btn-link" data-bs-toggle="collapse" href="#group3" role="button" aria-expanded="false" aria-controls="group3">
+                        Group 3
+                    </a>
+                </p>
+                <div class="collapse" id="group3">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#">Link 3.1</a></li>
+                        <li class="list-group-item"><a href="#">Link 3.2</a></li>
+                        <li class="list-group-item"><a href="#">Link 3.3</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Units Table Section -->
-        <div class="card">
-            <div class="card-header">
-                <h3>Available Units</h3>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Unit Number</th>
-                            <th>Floor</th>
-                            <th>Size (sq ft)</th>
-                            <th>Bedrooms</th>
-                            <th>Bathrooms</th>
-                            <th>Price (KES/month)</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Unit 1</td>
-                            <td>1st Floor</td>
-                            <td>850</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>50,000</td>
-                            <td>Available</td>
-                        </tr>
-                        <tr>
-                            <td>Unit 2</td>
-                            <td>2nd Floor</td>
-                            <td>950</td>
-                            <td>3</td>
-                            <td>2</td>
-                            <td>75,000</td>
-                            <td>Occupied</td>
-                        </tr>
-                        <tr>
-                            <td>Unit 3</td>
-                            <td>3rd Floor</td>
-                            <td>1200</td>
-                            <td>4</td>
-                            <td>3</td>
-                            <td>100,000</td>
-                            <td>Available</td>
-                        </tr>
-                        <!-- Add more units as needed -->
-                    </tbody>
-                </table>
-            </div>
+        <!-- Main Content -->
+        <div class="flex-grow-1 p-3">
+            <h1>Main Content</h1>
+            <p>Your main content goes here...</p>
         </div>
     </div>
 
-    <!-- Bootstrap JS (Optional, for Bootstrap components) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

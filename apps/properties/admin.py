@@ -1,5 +1,7 @@
 from django.contrib import admin
 from apps.properties.models import PropertyUnit, PropertyPaymentPlan, Property
+
+
 # Register your models here.
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):

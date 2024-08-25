@@ -9,7 +9,8 @@ from apps.finance.models import ClientPayment, ClientInstallment
 from apps.users.models import Client
 
 PAYMENT_REASONS = ["Deposit", "Booking", "Installment", "Combined"]
-PAYMENT_METHODS = ["Mpesa", "Bank Transfer", "Bank Deposit", "Cash",  "Cheque"]
+PAYMENT_METHODS = ["Mpesa", "Bank Transfer", "Bank Deposit", "Cash", "Cheque"]
+
 
 @login_required(login_url="/users/login")
 def payments(request):
@@ -19,12 +20,19 @@ def payments(request):
 
     if request.method == "POST":
         id_number = request.POST.get("id_number")
-        payments = ClientPayment.objects.filter(Q(client__id_number__icontains=id_number))
+        payments = ClientPayment.objects.filter(
+            Q(client__id_number__icontains=id_number)
+        )
 
     paginator = Paginator(payments, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj": page_obj, "payment_methods": PAYMENT_METHODS, "payment_reasons": PAYMENT_REASONS, "clients": clients}
+    context = {
+        "page_obj": page_obj,
+        "payment_methods": PAYMENT_METHODS,
+        "payment_reasons": PAYMENT_REASONS,
+        "clients": clients,
+    }
 
     return render(request, "finance/payments/payments.html", context)
 
@@ -45,7 +53,7 @@ def new_payment(request):
             payment_reason=payment_reason,
             recorded_by=user,
             payment_method=payment_method,
-            date_paid=date_paid
+            date_paid=date_paid,
         )
 
         return redirect("payments")
@@ -63,7 +71,7 @@ def pay_installment(request):
         date_paid = request.POST.get("date_paid")
 
         installment = ClientInstallment.objects.get(id=installment_id)
-        
+
         ClientPayment.objects.create(
             installment=installment,
             amount=amount,
@@ -71,7 +79,7 @@ def pay_installment(request):
             payment_reason=payment_reason,
             date_paid=date_paid,
             client=installment.client,
-            recorded_by=user
+            recorded_by=user,
         )
 
         if amount < installment.amount_expected:
@@ -84,8 +92,5 @@ def pay_installment(request):
             installment.paid = True
             installment.save()
         return redirect("installments")
-    
+
     return render(request, "finance/payments/pay_installment.html")
-
-
-        

@@ -6,6 +6,7 @@ from django.db.models import Q
 
 from apps.users.models import Client
 
+
 @login_required(login_url="/users/login/")
 def clients(request):
     clients = Client.objects.all().order_by("-created")
@@ -27,10 +28,7 @@ def client_details(request, id):
     client = Client.objects.get(id=id)
     plans = client.clientpaymentplans.all().order_by("-created")
 
-    context = {
-        "client": client,
-        "plans": plans
-    }
+    context = {"client": client, "plans": plans}
     return render(request, "clients/client_details.html", context)
 
 
@@ -63,7 +61,7 @@ def new_client(request):
             id_copy=id_copy,
             address=address,
             city=city,
-            country=country
+            country=country,
         )
 
         return redirect("clients")
@@ -99,7 +97,9 @@ def edit_client(request):
         client.address = address if address else client.address
         client.city = city if city else client.city
         client.country = country if country else client.country
-        client.kra_certificate = kra_certificate if kra_certificate else client.kra_certificate
+        client.kra_certificate = (
+            kra_certificate if kra_certificate else client.kra_certificate
+        )
         client.id_copy = id_copy if id_copy else client.id_copy
         client.photo = photo if photo else client.photo
         client.save()

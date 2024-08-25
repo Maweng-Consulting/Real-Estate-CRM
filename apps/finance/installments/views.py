@@ -7,19 +7,27 @@ from apps.finance.models import ClientInstallment
 
 INSTALLMENT_STATUSES = ["Paid", "Pending", "Defaulted", "Future"]
 PAYMENT_REASONS = ["Deposit", "Booking", "Installment", "Combined"]
-PAYMENT_METHODS = ["Mpesa", "Bank Transfer", "Bank Deposit", "Cash",  "Cheque"]
+PAYMENT_METHODS = ["Mpesa", "Bank Transfer", "Bank Deposit", "Cash", "Cheque"]
+
 
 @login_required(login_url="/users/login")
 def installments(request):
     installments = ClientInstallment.objects.all().order_by("-created")
     if request.method == "POST":
         id_number = request.POST.get("search_text")
-        installments = ClientInstallment.objects.filter(Q(client__id_number__icontains=id_number))
+        installments = ClientInstallment.objects.filter(
+            Q(client__id_number__icontains=id_number)
+        )
 
     paginator = Paginator(installments, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj": page_obj, "installment_statuses": INSTALLMENT_STATUSES, "payment_methods": PAYMENT_METHODS, "payment_reasons": PAYMENT_REASONS}
+    context = {
+        "page_obj": page_obj,
+        "installment_statuses": INSTALLMENT_STATUSES,
+        "payment_methods": PAYMENT_METHODS,
+        "payment_reasons": PAYMENT_REASONS,
+    }
 
     return render(request, "finance/installments/installments.html", context)
 

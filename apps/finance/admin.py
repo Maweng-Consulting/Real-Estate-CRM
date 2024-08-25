@@ -1,5 +1,7 @@
 from django.contrib import admin
 from apps.finance.models import ClientPayment, ClientPaymentPlan, ClientInstallment
+
+
 # Register your models here.
 @admin.register(ClientInstallment)
 class InstallmentAdmin(admin.ModelAdmin):

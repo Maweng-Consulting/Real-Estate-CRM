@@ -8,7 +8,8 @@ from django.db.models import Q
 from apps.properties.models import Property, PropertyPaymentPlan, PropertyUnit
 
 PROPERTY_TYPES = ["Building", "Land"]
-UNIT_STATUSES = ["Booked", "Reserved", "Sold",  "Available"]
+UNIT_STATUSES = ["Booked", "Reserved", "Sold", "Available"]
+
 
 @login_required(login_url="/users/login/")
 def properties(request):
@@ -21,7 +22,11 @@ def properties(request):
     paginator = Paginator(properties, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj": page_obj, "property_types": PROPERTY_TYPES, "unit_statuses": UNIT_STATUSES}
+    context = {
+        "page_obj": page_obj,
+        "property_types": PROPERTY_TYPES,
+        "unit_statuses": UNIT_STATUSES,
+    }
     return render(request, "properties/properties.html", context)
 
 
@@ -37,7 +42,7 @@ def property_details(request, id):
     context = {
         "property": property,
         "page_obj": page_obj,
-        "unit_statuses": UNIT_STATUSES
+        "unit_statuses": UNIT_STATUSES,
     }
     return render(request, "properties/property_details.html", context)
 
@@ -69,12 +74,13 @@ def new_property(request):
             booking_fee=booking_fee,
             deposit_fee=deposit_fee,
             image=image,
-            title_deed=title_deed
+            title_deed=title_deed,
         )
 
         return redirect("properties")
-    
+
     return render(request, "properties/new_property.html")
+
 
 @login_required(login_url="/users/login/")
 def edit_property(request):
@@ -95,7 +101,9 @@ def edit_property(request):
 
         property = Property.objects.get(id=property_id)
         property.name = name if name else property.name
-        property.property_type = property_type if property_type else property.property_type
+        property.property_type = (
+            property_type if property_type else property.property_type
+        )
         property.location = location if location else property.location
         property.town = town if town else property.town
         property.county = county if county else property.county
