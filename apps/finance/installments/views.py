@@ -14,9 +14,11 @@ PAYMENT_METHODS = ["Mpesa", "Bank Transfer", "Bank Deposit", "Cash", "Cheque"]
 def installments(request):
     installments = ClientInstallment.objects.all().order_by("-created")
     if request.method == "POST":
-        id_number = request.POST.get("search_text")
+        search_text = request.POST.get("search_text")
         installments = ClientInstallment.objects.filter(
-            Q(client__id_number__icontains=id_number)
+            Q(client__id_number__icontains=search_text)
+            | Q(client__name__icontains=search_text)
+            | Q(payment_plan__unit__unit_number__icontains=search_text)
         )
 
     paginator = Paginator(installments, 10)

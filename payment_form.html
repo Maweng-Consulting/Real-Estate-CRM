@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments Recording Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .fee-group {
+            display: none;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function toggleFields() {
+            const paymentType = document.getElementById('paymentType').value;
+            const feeGroup = document.querySelector('.fee-group');
+            const amountField = document.getElementById('amountField');
+            
+            if (paymentType === 'Combined') {
+                feeGroup.style.display = 'block';
+                amountField.style.display = 'none';
+            } else {
+                feeGroup.style.display = 'none';
+                amountField.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Payments Recording Form</h2>
+        <form>
+            <label for="paymentType">Payment Type</label>
+            <select id="paymentType" name="paymentType" onchange="toggleFields()">
+                <option value="Installment">Installment</option>
+                <option value="Deposit">Deposit</option>
+                <option value="Booking">Booking</option>
+                <option value="Combined">Combined</option>
+            </select>
+            
+            <div id="amountField">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount">
+            </div>
+            
+            <div class="fee-group">
+                <label for="depositFee">Deposit Fee</label>
+                <input type="number" id="depositFee" name="depositFee" placeholder="Enter deposit fee">
+                
+                <label for="bookingFee">Booking Fee</label>
+                <input type="number" id="bookingFee" name="bookingFee" placeholder="Enter booking fee">
+                
+                <label for="installmentFee">Installment Fee</label>
+                <input type="number" id="installmentFee" name="installmentFee" placeholder="Enter installment fee">
+            </div>
+            
+            <button type="submit" class="btn">Submit Payment</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -7,7 +7,9 @@ from decimal import Decimal
 from datetime import datetime
 
 from apps.attendance.models import Visitor
+
 # Create your views here.
+
 
 @login_required(login_url="/users/login")
 def visitors(request):
@@ -15,16 +17,15 @@ def visitors(request):
 
     if request.method == "POST":
         id_number = request.POST.get("id_number")
-        visitors = Visitor.objects.filter(
-            Q(id_number__icontains=id_number)
-        ).order_by("-created")
+        visitors = Visitor.objects.filter(Q(id_number__icontains=id_number)).order_by(
+            "-created"
+        )
 
     paginator = Paginator(visitors, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     context = {
         "page_obj": page_obj,
-      
     }
     return render(request, "attendance/visitors/visitors.html", context)
 
@@ -47,10 +48,11 @@ def new_visitor(request):
             phone_number=phone_number,
             gender=gender,
             reason=reason,
-            represents=represents
+            represents=represents,
         )
         return redirect("visitors")
     return render(request, "attendance/visitors/new_visitor.html")
+
 
 @login_required(login_url="/users/login")
 def checkout_visitor(request):

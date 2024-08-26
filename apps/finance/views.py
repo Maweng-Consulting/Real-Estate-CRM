@@ -23,7 +23,5 @@ def home(request):
 def generate_offer_letter(request, id):
     plan = ClientPaymentPlan.objects.get(id=id)
 
-    context = {
-        "plan": plan
-    }
+    context = {"plan": plan}
     return render(request, "documents/offer_letter.html", context)

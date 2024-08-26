@@ -1,9 +1,6 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from django.db.models import Q
 
 from apps.users.models import Client
@@ -17,12 +14,13 @@ def payment_plans(request):
 
     clients = Client.objects.all().order_by("-created")
     units = PropertyUnit.objects.all().only("id", "unit_number", "client_id")
-    print(units)
 
     if request.method == "POST":
-        id_number = request.POST.get("id_number")
+        search_text = request.POST.get("search_text")
         plans = ClientPaymentPlan.objects.filter(
-            Q(client__id_number__icontains=id_number)
+            Q(client__id_number__icontains=search_text)
+            | Q(client__name__icontains=search_text)
+            | Q(unit__unit_number__icontains=search_text)
         )
 
     paginator = Paginator(plans, 10)
@@ -41,9 +39,10 @@ def payment_plan_details(request, id):
     )
 
     if request.method == "POST":
-        id_number = request.POST.get("search_text")
+        search_text = request.POST.get("search_text")
         installments = ClientInstallment.objects.filter(
-            Q(client__id_number__icontains=id_number)
+            Q(client__id_number__icontains=search_text)
+            | Q(client__name__icontains=search_text)
         )
 
     paginator = Paginator(installments, 10)

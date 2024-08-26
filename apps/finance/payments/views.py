@@ -19,7 +19,7 @@ def payments(request):
     clients = Client.objects.all()
 
     if request.method == "POST":
-        id_number = request.POST.get("id_number")
+        id_number = request.POST.get("search_text")
         payments = ClientPayment.objects.filter(
             Q(client__id_number__icontains=id_number)
         )

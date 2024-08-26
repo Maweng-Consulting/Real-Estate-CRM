@@ -29,12 +29,18 @@ PAYMENT_METHODS = (
 
 # Create your models here.
 class ClientPaymentPlan(AbstractBaseModel):
-    client = models.ForeignKey("users.Client", on_delete=models.CASCADE, related_name="clientpaymentplans")
-    unit = models.ForeignKey("properties.PropertyUnit", on_delete=models.SET_NULL, null=True)
+    client = models.ForeignKey(
+        "users.Client", on_delete=models.CASCADE, related_name="clientpaymentplans"
+    )
+    unit = models.ForeignKey(
+        "properties.PropertyUnit", on_delete=models.SET_NULL, null=True
+    )
     booking_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     deposit_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     period = models.IntegerField(default=1)
-    installment_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
+    installment_amount = models.DecimalField(
+        max_digits=100, decimal_places=2, default=0
+    )
     total_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     first_repayment_date = models.DateField(null=True)
     fully_paid = models.BooleanField(default=False)

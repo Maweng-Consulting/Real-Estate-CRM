@@ -12,8 +12,10 @@ def clients(request):
     clients = Client.objects.all().order_by("-created")
 
     if request.method == "POST":
-        id_number = request.POST.get("id_number")
-        clients = Client.objects.filter(Q(id_number__icontains=id_number))
+        search_text = request.POST.get("search_text")
+        clients = Client.objects.filter(
+            Q(id_number__icontains=search_text) | Q(name__icontains=search_text)
+        )
 
     paginator = Paginator(clients, 10)
     page_number = request.GET.get("page")
@@ -27,6 +29,12 @@ def clients(request):
 def client_details(request, id):
     client = Client.objects.get(id=id)
     plans = client.clientpaymentplans.all().order_by("-created")
+
+    if request.method == "POST":
+        search_text = request.POST.get("search_text")
+        plans = client.clientpaymentplans.filter(
+            Q(unit__unit_number__icontains=search_text)
+        ).order_by("-created")
 
     context = {"client": client, "plans": plans}
     return render(request, "clients/client_details.html", context)

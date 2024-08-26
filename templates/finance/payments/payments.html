@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
+{% block additional_css %}
+<style>
+
+  select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+  .feeGroup {
+      display: none;
+  }
+  </style>
+  
+{% endblock additional_css %}
+
 {% block content %}
 <div class="row">
     <div class="col-4">

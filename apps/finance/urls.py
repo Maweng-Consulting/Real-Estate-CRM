@@ -15,7 +15,11 @@ from apps.finance.payments.views import payments, new_payment, pay_installment
 
 urlpatterns = [
     path("", home, name="finance"),
-    path("generate-offer-letter/<int:id>/", generate_offer_letter, name="generate-offer-letter"),
+    path(
+        "generate-offer-letter/<int:id>/",
+        generate_offer_letter,
+        name="generate-offer-letter",
+    ),
     # Payment Plans
     path("payment-plans/", payment_plans, name="payment-plans"),
     path(
