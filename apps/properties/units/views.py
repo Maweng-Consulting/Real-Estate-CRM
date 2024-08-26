@@ -96,7 +96,10 @@ def assign_unit(request):
         unit_id = request.POST.get("unit_id")
         client_id = request.POST.get("client_id")
         unit = PropertyUnit.objects.get(id=unit_id)
-        unit.client_id = client_id
+        client = Client.objects.get(id=client_id)
+        unit.client = client
+        unit.unit_status = "Booked"
+        unit.sold_by = client.acquired_by
         unit.save()
         return redirect(f"/properties/{unit.property.id}/units")
     return render(request, "properties/units/delete_unit.html")

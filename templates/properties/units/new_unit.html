@@ -1,4 +1,4 @@
-<div class="modal fade" id="newUnitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="newUnitModal{{property.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -10,6 +10,7 @@
                 <div class="modal-body">
                 <p><b>Property Name: </b>{{property.name}}</p>
                 <hr>
+                <input type="number" id="property_id" name="property_id" value="{{property.id}}" hidden readonly required />
                 <div class="row mb-3">
                 <div class="col">
                   <label for="exampleInputPassword1" class="form-label fw-bold">Unit Number</label>

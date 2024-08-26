@@ -10,7 +10,7 @@ from apps.users.models import Client, User
 @login_required(login_url="/users/login/")
 def clients(request):
     clients = Client.objects.all().order_by("-created")
-    users = User.objects.all().order_by("-created")
+    users = User.objects.filter(role="Sales Agent").order_by("-created")
 
     if request.method == "POST":
         search_text = request.POST.get("search_text")
@@ -67,7 +67,7 @@ def new_client(request):
             phone_number=phone_number,
             id_number=id_number,
             kra_pin=kra_pin,
-            acquired_by=acquired_by,
+            acquired_by_id=acquired_by,
             kra_certificate=kra_certificate,
             photo=photo,
             id_copy=id_copy,
