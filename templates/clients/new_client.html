@@ -107,6 +107,16 @@
                       />
                     </div>
                   </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label class="form-label fw-bold">Signed By.</label>
+                      <select class="form-select" id="acquired_by" name="acquired_by">
+                        {%  for user in users %}
+                          <option value="{{user.id}}">{{user.name}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
                 <div class="row mb-3">
                   <div class="col">
                     <label for="exampleInputPassword1" class="form-label fw-bold">Scanned ID</label>

@@ -50,6 +50,7 @@ class Client(AbstractBaseModel):
     id_copy = models.FileField(upload_to="client_ids/", null=True)
     kra_certificate = models.FileField(upload_to="kra_cerificates/", null=True)
     photo = models.ImageField(upload_to="client_photos/", null=True)
+    acquired_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name

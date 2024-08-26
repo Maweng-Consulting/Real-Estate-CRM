@@ -36,7 +36,7 @@
               <th scope="col">ID Number</th>
               <th scope="col">Gender</th>
               <th scope="col">Phone Number</th>
-              <th scope="col">Email</th>
+              <th scope="col">Signed By</th>
               <th scope="col" colspan="3">Actions</th>
             </tr>
           </thead>
@@ -48,7 +48,7 @@
               <td>{{client.id_number}}</td>
               <td>{{client.gender}}</td>
               <td>{{client.phone_number}}</td>
-              <td>{{client.email}}</td>
+              <td>{{client.acquired_by}}</td>
               <td><a href="{% url 'client-details' client.id %}" class="btn btn-info btn-sm">
                 <i class="bi bi-eye"></i>
               </a></td>

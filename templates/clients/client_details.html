@@ -61,7 +61,7 @@
               <th scope="col">Period</th>
               <th scope="col">Full Paid</th>
               <th scope="col">Offer Letter</th>
-              <th scope="col" colspan="3">Actions</th>
+              <th scope="col" colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -76,9 +76,7 @@
               <td><a href="{% url 'payment-plan-details' plan.id %}" class="btn btn-info btn-sm">
                 <i class="bi bi-eye"></i>
               </a></td>
-              <td><a class="btn btn-warning btn-sm">
-                <i class="bi bi-printer"></i>
-              </a></td>
+             
               <td><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletePlanModal{{ plan.id }}">
                 <i class="bi bi-trash"></i>
               </a></td>
@@ -87,6 +85,65 @@
 
           </tbody>
     </table>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header">
+      <div class="row">
+          <div class="col">
+              <h5>Units Acquired</h5>
+          </div>
+          <div class="col">
+              <form method="POST">
+                  {% csrf_token %}
+                  <div class="input-group">
+                    <div class="row">
+                      <div class="col-8">
+                        <input type="text" class="form-control" name="search_text" id="search_text" placeholder="Number" >
+                      </div>
+                      <div class="col-4">
+                        <button class="btn btn-success">Search</button>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  
+                </form>
+          </div>
+      </div>
+  </div>
+  <table class="table table-sm">
+      <thead>
+          <tr>
+          <th scope="col">#</th>
+          <th scope="col">Property</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Deposit</th>
+            <th scope="col">Booking</th>
+            <th scope="col">Sold By</th>
+            <th scope="col"></th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for unit in units %}
+          <tr>
+            <td>{{unit.id}}</td>
+            <td>{{unit.property}}</td>
+            <td>{{unit.unit_number}}</td>
+            <td>{{unit.cost}}</td>
+            <td>{{unit.deposit_fee}}</td>
+            <td>{{unit.booking_fee}}</td>
+            <td>{{unit.sold_by}}</td>
+            <td><a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#unitDetailsModal{{unit.id}}">
+              <i class="bi bi-eye"></i>
+            </a></td>
+            {% include "properties/units/unit_details.html" %}
+          </tr>
+          {% endfor %}
+
+        </tbody>
+  </table>
 </div>
 
 {% endblock content %}

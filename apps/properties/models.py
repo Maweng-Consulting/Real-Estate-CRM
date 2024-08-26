@@ -49,13 +49,14 @@ class PropertyUnit(AbstractBaseModel):
     property = models.ForeignKey(
         Property, on_delete=models.CASCADE, related_name="propertyunits"
     )
-    client = models.ForeignKey("users.Client", on_delete=models.SET_NULL, null=True)
+    client = models.ForeignKey("users.Client", related_name="clientunits", on_delete=models.SET_NULL, null=True)
     cost = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     booking_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     deposit_fee = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     unit_status = models.CharField(
         max_length=255, choices=UNIT_STATUSES, default="Available"
     )
+    sold_by = models.ForeignKey("users.User", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.unit_number

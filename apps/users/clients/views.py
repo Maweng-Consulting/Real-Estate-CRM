@@ -4,12 +4,13 @@ from django.shortcuts import redirect, render
 from django.db.models import Q
 
 
-from apps.users.models import Client
+from apps.users.models import Client, User
 
 
 @login_required(login_url="/users/login/")
 def clients(request):
     clients = Client.objects.all().order_by("-created")
+    users = User.objects.all().order_by("-created")
 
     if request.method == "POST":
         search_text = request.POST.get("search_text")
@@ -20,7 +21,7 @@ def clients(request):
     paginator = Paginator(clients, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj": page_obj}
+    context = {"page_obj": page_obj, "users": users}
 
     return render(request, "clients/clients.html", context)
 
@@ -29,6 +30,7 @@ def clients(request):
 def client_details(request, id):
     client = Client.objects.get(id=id)
     plans = client.clientpaymentplans.all().order_by("-created")
+    units = client.clientunits.all().order_by("-created")
 
     if request.method == "POST":
         search_text = request.POST.get("search_text")
@@ -36,7 +38,7 @@ def client_details(request, id):
             Q(unit__unit_number__icontains=search_text)
         ).order_by("-created")
 
-    context = {"client": client, "plans": plans}
+    context = {"client": client, "plans": plans, "units": units}
     return render(request, "clients/client_details.html", context)
 
 
@@ -52,6 +54,7 @@ def new_client(request):
         address = request.POST.get("address")
         city = request.POST.get("city")
         country = request.POST.get("country")
+        acquired_by = request.POST.get("acquired_by")
 
         kra_certificate = request.FILES.get("kra_certificate")
         photo = request.FILES.get("photo")
@@ -64,6 +67,7 @@ def new_client(request):
             phone_number=phone_number,
             id_number=id_number,
             kra_pin=kra_pin,
+            acquired_by=acquired_by,
             kra_certificate=kra_certificate,
             photo=photo,
             id_copy=id_copy,
@@ -90,6 +94,7 @@ def edit_client(request):
         address = request.POST.get("address")
         city = request.POST.get("city")
         country = request.POST.get("country")
+        acquired_by = request.POST.get("acquired_by")
 
         kra_certificate = request.FILES.get("kra_certificate")
         photo = request.FILES.get("photo")
@@ -110,6 +115,7 @@ def edit_client(request):
         )
         client.id_copy = id_copy if id_copy else client.id_copy
         client.photo = photo if photo else client.photo
+        client.acquired_by_id = acquired_by
         client.save()
 
         return redirect("clients")
