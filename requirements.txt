@@ -3,3 +3,4 @@ gunicorn
 django-cors-headers
 whitenoise
 django-filter
+python-dateutil
